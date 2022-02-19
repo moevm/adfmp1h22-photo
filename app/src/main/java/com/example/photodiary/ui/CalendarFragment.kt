@@ -6,8 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import com.example.photodiary.R
 import com.example.photodiary.databinding.CalendarBinding
+import com.applandeo.materialcalendarview.CalendarView
+import java.util.*
+
 
 class CalendarFragment : Fragment() {
 
@@ -23,14 +26,29 @@ class CalendarFragment : Fragment() {
 
 
         _binding = CalendarBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+
+        val view: View = inflater.inflate(R.layout.calendar, container,
+            false)
+
+        val calendarView: CalendarView = view.findViewById(R.id.calendarView)
+        calendarView.setOnDayClickListener{eventDay ->
+            println(eventDay.calendar.get(Calendar.DATE))
+        }
+
+        val daysInARow: TextView = view.findViewById(R.id.daysInARow)
+        val days = 7
+        daysInARow.text = "Вы делаете записи $days подряд"
 
 
-        return root
+        return view
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }
+
