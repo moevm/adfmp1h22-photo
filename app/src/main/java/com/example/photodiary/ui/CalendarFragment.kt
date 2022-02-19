@@ -1,6 +1,5 @@
 package com.example.photodiary.ui
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,11 +33,18 @@ class CalendarFragment : Fragment() {
         calendarView.setOnDayClickListener{eventDay ->
             val fragment = GalleryFragment()
             val transaction = parentFragmentManager.beginTransaction()
-            transaction.replace(container!!.id, fragment)
+            val date = eventDay.calendar
+            val bundle = Bundle()
+            bundle.putInt("day", date.get(Calendar.DATE))
+            bundle.putInt("month", date.get(Calendar.MONTH))
+            bundle.putInt("year", date.get(Calendar.YEAR))
+            fragment.arguments = bundle
+            transaction.replace(R.id.nav_host_fragment_activity_main, fragment).addToBackStack("tag_back")
+            println(activity)
             transaction.commit()
         }
 
-        val daysInARow: TextView = view.findViewById(R.id.daysInARow)
+        val daysInARow: TextView = view.findViewById(R.id.date)
         val days = 7
         daysInARow.text = "Вы делаете записи $days подряд"
 
