@@ -1,5 +1,6 @@
 package com.example.photodiary.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +17,6 @@ class CalendarFragment : Fragment() {
 
     private var _binding: CalendarBinding? = null
 
-    private val binding get() = _binding!!
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -32,7 +32,10 @@ class CalendarFragment : Fragment() {
 
         val calendarView: CalendarView = view.findViewById(R.id.calendarView)
         calendarView.setOnDayClickListener{eventDay ->
-            println(eventDay.calendar.get(Calendar.DATE))
+            val fragment = GalleryFragment()
+            val transaction = parentFragmentManager.beginTransaction()
+            transaction.replace(container!!.id, fragment)
+            transaction.commit()
         }
 
         val daysInARow: TextView = view.findViewById(R.id.daysInARow)
