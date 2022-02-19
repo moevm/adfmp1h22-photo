@@ -1,4 +1,4 @@
-package com.example.photodiary.ui.notifications
+package com.example.photodiary.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,14 +7,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.photodiary.databinding.SearchBinding
+import com.example.photodiary.databinding.CalendarBinding
 
-class NotificationsFragment : Fragment() {
+class CalendarFragment : Fragment() {
 
-    private var _binding: SearchBinding? = null
+    private var _binding: CalendarBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -24,8 +22,9 @@ class NotificationsFragment : Fragment() {
     ): View {
 
 
-        _binding = SearchBinding.inflate(inflater, container, false)
+        _binding = CalendarBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
 
         return root
     }

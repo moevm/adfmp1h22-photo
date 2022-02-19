@@ -1,4 +1,4 @@
-package com.example.photodiary.ui.home
+package com.example.photodiary.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,14 +7,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.photodiary.databinding.CalendarBinding
+import com.example.photodiary.databinding.CameraBinding
 
-class HomeFragment : Fragment() {
+class CameraFragment : Fragment() {
 
-    private var _binding: CalendarBinding? = null
+    private var _binding: CameraBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -24,13 +22,9 @@ class HomeFragment : Fragment() {
     ): View {
 
 
-        _binding = CalendarBinding.inflate(inflater, container, false)
+        _binding = CameraBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-//        val textView: TextView = binding.textHome
-//        homeViewModel.text.observe(viewLifecycleOwner) {
-//            textView.text = it
-//        }
         return root
     }
 

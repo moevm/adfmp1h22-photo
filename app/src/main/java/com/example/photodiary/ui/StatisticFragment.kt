@@ -1,4 +1,4 @@
-package com.example.photodiary.ui.dashboard
+package com.example.photodiary.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,12 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.photodiary.databinding.StatisticBinding
 
-class DashboardFragment : Fragment() {
+class StatisticFragment : Fragment() {
 
     private var _binding: StatisticBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -27,10 +25,6 @@ class DashboardFragment : Fragment() {
         _binding = StatisticBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-//        val textView: TextView = binding.textDashboard
-//        dashboardViewModel.text.observe(viewLifecycleOwner) {
-//            textView.text = it
-//        }
         return root
     }
 
