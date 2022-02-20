@@ -5,9 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.photodiary.R
+import com.example.photodiary.classes.RemoveDialog
 import com.example.photodiary.databinding.GalleryBinding
 import java.lang.reflect.Array
 import java.util.*
@@ -36,17 +38,32 @@ class GalleryFragment : Fragment() {
 
         _binding = GalleryBinding.inflate(inflater, container, false)
 
+        val img1: ImageView = view.findViewById(R.id.imageView1)
+        val img2: ImageView = view.findViewById(R.id.imageView2)
+        val img3: ImageView = view.findViewById(R.id.imageView3)
+        val img4: ImageView = view.findViewById(R.id.imageView4)
 
+        val listener = View.OnLongClickListener{
+            val removeDialog = RemoveDialog()
+            val manager = parentFragmentManager
+            removeDialog.show(manager, "remove")
+            true
+        }
+
+        img1.setOnLongClickListener(listener)
+        img2.setOnLongClickListener(listener)
+        img3.setOnLongClickListener(listener)
+        img4.setOnLongClickListener(listener)
 
         return view
-    }
 
+
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 
 }
 

@@ -32,7 +32,7 @@
             android:layout_height="match_parent" >
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/imageView1"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginStart="25dp"
@@ -40,7 +40,7 @@
                 android:src="@mipmap/img" />
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/imageView2"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginStart="25dp"
@@ -53,7 +53,7 @@
             android:layout_height="match_parent" >
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/imageView3"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginStart="25dp"
