@@ -1,18 +1,17 @@
 package com.example.photodiary.ui
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.example.photodiary.Photo
 import com.example.photodiary.R
 import com.example.photodiary.classes.RemoveDialog
 import com.example.photodiary.databinding.GalleryBinding
-import java.lang.reflect.Array
-import java.util.*
 
 
 class GalleryFragment : Fragment() {
@@ -43,17 +42,27 @@ class GalleryFragment : Fragment() {
         val img3: ImageView = view.findViewById(R.id.imageView3)
         val img4: ImageView = view.findViewById(R.id.imageView4)
 
-        val listener = View.OnLongClickListener{
+        val onLongClickListener = View.OnLongClickListener{
             val removeDialog = RemoveDialog()
             val manager = parentFragmentManager
             removeDialog.show(manager, "remove")
             true
         }
 
-        img1.setOnLongClickListener(listener)
-        img2.setOnLongClickListener(listener)
-        img3.setOnLongClickListener(listener)
-        img4.setOnLongClickListener(listener)
+        val onClickListener = View.OnClickListener {
+            val intent: Intent = Intent(context, Photo::class.java)
+            startActivity(intent)
+        }
+
+        img1.setOnClickListener(onClickListener)
+        img2.setOnClickListener(onClickListener)
+        img3.setOnClickListener(onClickListener)
+        img4.setOnClickListener(onClickListener)
+
+        img1.setOnLongClickListener(onLongClickListener)
+        img2.setOnLongClickListener(onLongClickListener)
+        img3.setOnLongClickListener(onLongClickListener)
+        img4.setOnLongClickListener(onLongClickListener)
 
         return view
 
