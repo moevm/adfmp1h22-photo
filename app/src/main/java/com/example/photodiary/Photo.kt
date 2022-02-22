@@ -1,5 +1,6 @@
 package com.example.photodiary
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
@@ -27,6 +28,16 @@ class Photo : AppCompatActivity() {
             val editDialog = EditDialog(textForEditing)
             val manager = supportFragmentManager
             editDialog.show(manager, "edit")
+        }
+
+        val shareButton: ImageButton = findViewById(R.id.share)
+        shareButton.setOnClickListener{
+            val shareIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_STREAM, "@mipmap/img")
+                type = "image/*"
+            }
+            startActivity(Intent.createChooser(shareIntent, null))
         }
     }
 }
