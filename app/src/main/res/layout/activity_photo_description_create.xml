@@ -6,25 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".ui.PhotoDescriptionCreateActivity">
 
-    <Button
-        android:id="@+id/skipButton"
-        style="?android:attr/borderlessButtonStyle"
+    <EditText
+        android:id="@+id/descriptionTextEdit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Описание"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/doneButton"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/doneButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@android:color/white"
-        android:shadowColor="@color/white"
-        android:text="Пропустить"
-        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/done_foreground" />
 
     <ImageView
         android:id="@+id/descriptionAddImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/descriptionTextEdit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/img" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

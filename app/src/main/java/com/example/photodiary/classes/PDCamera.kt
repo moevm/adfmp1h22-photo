@@ -1,5 +1,6 @@
 package com.example.photodiary.classes
 
+import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -13,9 +14,15 @@ class PDCamera(private val activity: ComponentActivity): ActivityResultCallback<
 
     private var imageFile = File(activity.filesDir, "default_image.jpg")
     private val activityLauncher = activity.registerForActivityResult(ActivityResultContracts.TakePicture(), this)
+    private val descriptionActivityLauncher = activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            val description = it.data?.getStringExtra("description")
+            Log.d("PD", description!!)
+        }
+    }
 
     fun open() {
-        imageFile = File(activity.filesDir, "test2.jpg")
+        imageFile = File(activity.filesDir, "test.jpg")
 
         val fileUri = FileProvider.getUriForFile(
             activity,
@@ -28,9 +35,9 @@ class PDCamera(private val activity: ComponentActivity): ActivityResultCallback<
 
     override fun onActivityResult(result: Boolean?) {
         val descriptionCreateIntent = Intent(activity, PhotoDescriptionCreateActivity::class.java)
-        descriptionCreateIntent.putExtra("filePath", imageFile.path)
+//        descriptionCreateIntent.putExtra("filePath", imageFile.path)
         descriptionCreateIntent.putExtra("fileUri", imageFile.toURI().toString())
-        activity.startActivity(descriptionCreateIntent)
+        descriptionActivityLauncher.launch(descriptionCreateIntent)
     }
 
 }
