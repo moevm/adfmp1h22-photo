@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/share"
             android:layout_width="133dp"
             android:layout_height="35dp"
             android:layout_weight="1"
@@ -33,7 +33,7 @@
             app:srcCompat="@drawable/delete_foreground" />
 
         <ImageButton
-            android:id="@+id/imageButton3"
+            android:id="@+id/edit"
             android:layout_width="133dp"
             android:layout_height="35dp"
             android:layout_weight="1"
