@@ -1,12 +1,12 @@
 package com.example.photodiary.classes
 
-import android.content.Context
+import android.content.Intent
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
-
 import androidx.core.content.FileProvider
+import com.example.photodiary.ui.PhotoDescriptionCreateActivity
 import java.io.File
 
 class PDCamera(private val activity: ComponentActivity): ActivityResultCallback<Boolean> {
@@ -27,7 +27,10 @@ class PDCamera(private val activity: ComponentActivity): ActivityResultCallback<
     }
 
     override fun onActivityResult(result: Boolean?) {
-        Log.d("PHOTO_DIARY", "Result: $result")
+        val descriptionCreateIntent = Intent(activity, PhotoDescriptionCreateActivity::class.java)
+        descriptionCreateIntent.putExtra("filePath", imageFile.path)
+        descriptionCreateIntent.putExtra("fileUri", imageFile.toURI().toString())
+        activity.startActivity(descriptionCreateIntent)
     }
 
 }
