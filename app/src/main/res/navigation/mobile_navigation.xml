@@ -11,11 +11,6 @@
         tools:layout="@layout/statistic" />
 
     <fragment
-        android:id="@+id/navigation_camera"
-        android:name="com.example.photodiary.ui.CameraFragment"
-        tools:layout="@layout/camera" />
-
-    <fragment
         android:id="@+id/navigation_calendar"
         android:name="com.example.photodiary.ui.CalendarFragment"
         tools:layout="@layout/calendar" />

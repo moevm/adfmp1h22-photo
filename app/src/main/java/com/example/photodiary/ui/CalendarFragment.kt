@@ -39,7 +39,7 @@ class CalendarFragment : Fragment() {
             bundle.putInt("month", date.get(Calendar.MONTH))
             bundle.putInt("year", date.get(Calendar.YEAR))
             fragment.arguments = bundle
-            transaction.replace(R.id.nav_host_fragment_activity_main, fragment).addToBackStack("tag_back")
+            transaction.replace(R.id.nav_host_fragment_activity_main, fragment).addToBackStack("gallery")
             println(activity)
             transaction.commit()
         }
