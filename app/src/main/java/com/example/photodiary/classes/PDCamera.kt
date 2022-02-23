@@ -11,6 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.example.photodiary.R
 import com.example.photodiary.ui.GalleryFragment
 import com.example.photodiary.ui.PhotoDescriptionCreateActivity
@@ -24,19 +25,16 @@ class PDCamera(private val activity: AppCompatActivity): ActivityResultCallback<
     private val descriptionActivityLauncher = activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
             val description = it.data?.getStringExtra("description")
-
-            val fragment = GalleryFragment()
             val bundle = Bundle()
 
             val date = Calendar.getInstance()
             bundle.putInt("day", date.get(Calendar.DATE))
             bundle.putInt("month", date.get(Calendar.MONTH))
             bundle.putInt("year", date.get(Calendar.YEAR))
-            fragment.arguments = bundle
 
-            val transaction = activity.supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.nav_host_fragment_activity_main, fragment).addToBackStack("gallery")
-            transaction.commit()
+            val navController = activity.findNavController(R.id.nav_host_fragment_activity_main)
+            navController.navigate(R.id.navigation_gallery, bundle)
+
         }
     }
 

@@ -19,4 +19,9 @@
         android:id="@+id/navigation_search"
         android:name="com.example.photodiary.ui.SearchFragment"
         tools:layout="@layout/search" />
+
+    <fragment
+        android:id="@+id/navigation_gallery"
+        android:name="com.example.photodiary.ui.GalleryFragment"
+        tools:layout="@layout/gallery" />
 </navigation>
