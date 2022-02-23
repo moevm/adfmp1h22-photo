@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
         navView.setOnItemReselectedListener {
-            navController.popBackStack()
+            navController.navigateUp()
         }
 
         val camera = PDCamera(this)
