@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.photodiary.R
 import com.example.photodiary.databinding.CalendarBinding
 import com.applandeo.materialcalendarview.CalendarView
@@ -31,17 +32,15 @@ class CalendarFragment : Fragment() {
 
         val calendarView: CalendarView = view.findViewById(R.id.calendarView)
         calendarView.setOnDayClickListener{eventDay ->
-            val fragment = GalleryFragment()
-            val transaction = parentFragmentManager.beginTransaction()
+
             val date = eventDay.calendar
             val bundle = Bundle()
             bundle.putInt("day", date.get(Calendar.DATE))
             bundle.putInt("month", date.get(Calendar.MONTH))
             bundle.putInt("year", date.get(Calendar.YEAR))
-            fragment.arguments = bundle
-            transaction.replace(R.id.nav_host_fragment_activity_main, fragment).addToBackStack("gallery")
-            println(activity)
-            transaction.commit()
+
+            val navController = findNavController()
+            navController.navigate(R.id.navigation_gallery, bundle)
         }
 
         val daysInARow: TextView = view.findViewById(R.id.date)
