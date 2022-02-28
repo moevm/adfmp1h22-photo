@@ -2,6 +2,7 @@ package com.example.photodiary.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +11,10 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.photodiary.Photo
 import com.example.photodiary.R
+import com.example.photodiary.classes.PDDB
 import com.example.photodiary.classes.RemoveDialog
 import com.example.photodiary.databinding.GalleryBinding
+import java.util.*
 
 
 class GalleryFragment : Fragment() {
@@ -25,6 +28,11 @@ class GalleryFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
+
+        val photos = PDDB(this.requireContext()).getByDate(Calendar.getInstance().time)
+        for (photo in photos) {
+            Log.d("PD", "${photo.id} ${photo.fileName} ${photo.description}")
+        }
 
         val view: View = inflater.inflate(R.layout.gallery, container,
             false)
