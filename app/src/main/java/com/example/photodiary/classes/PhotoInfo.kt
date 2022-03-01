@@ -1,6 +1,5 @@
 package com.example.photodiary.classes
 
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 

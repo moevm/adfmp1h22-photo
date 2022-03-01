@@ -3,6 +3,7 @@ package com.example.photodiary.classes
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.View
 import androidx.activity.ComponentActivity
@@ -16,6 +17,8 @@ import com.example.photodiary.R
 import com.example.photodiary.ui.GalleryFragment
 import com.example.photodiary.ui.PhotoDescriptionCreateActivity
 import java.io.File
+import java.nio.file.Files.createFile
+import java.text.SimpleDateFormat
 import java.util.*
 
 class PDCamera(private val activity: AppCompatActivity): ActivityResultCallback<Boolean> {
@@ -49,8 +52,14 @@ class PDCamera(private val activity: AppCompatActivity): ActivityResultCallback<
     }
 
     fun open() {
-        photoInfo = PhotoInfo()
-        imageFile = File(activity.filesDir, photoInfo.fileName)
+
+        val photoInfo = PhotoInfo()
+
+        val storageDir = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        imageFile = File(
+            storageDir /* directory */,
+            photoInfo.fileName, /* prefix */
+        )
 
         val fileUri = FileProvider.getUriForFile(
             activity,
