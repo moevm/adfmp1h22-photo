@@ -53,12 +53,12 @@ class PDCamera(private val activity: AppCompatActivity): ActivityResultCallback<
 
     fun open() {
 
-        val photoInfo = PhotoInfo()
+        photoInfo = PhotoInfo()
 
         val storageDir = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         imageFile = File(
             storageDir /* directory */,
-            photoInfo.fileName, /* prefix */
+            photoInfo.fileName, /* file */
         )
 
         val fileUri = FileProvider.getUriForFile(
