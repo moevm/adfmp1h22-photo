@@ -1,6 +1,7 @@
 package com.example.photodiary.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.photodiary.R
 import com.example.photodiary.databinding.CalendarBinding
 import com.applandeo.materialcalendarview.CalendarView
+import com.example.photodiary.classes.PDDB
+import com.example.photodiary.classes.PhotoInfo
 import java.util.*
 
 

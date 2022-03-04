@@ -20,55 +20,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
+    <ScrollView
+        android:layout_width="323dp"
+        android:layout_height="554dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.141"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date">
+        app:layout_constraintTop_toBottomOf="@+id/date"
+        app:layout_constraintVertical_bias="0.0">
 
-        <TableRow
+        <TableLayout
+            android:id="@+id/table"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="125dp"
-                android:layout_height="125dp"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="20dp"
-                android:src="@mipmap/img" />
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="125dp"
-                android:layout_height="125dp"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="20dp"
-                android:src="@mipmap/img" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="125dp"
-                android:layout_height="125dp"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="20dp"
-                android:src="@mipmap/img" />
-
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="125dp"
-                android:layout_height="125dp"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="20dp"
-                android:src="@mipmap/img" />
-        </TableRow>
-
-    </TableLayout>
+            android:layout_height="wrap_content" />
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
