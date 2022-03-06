@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.database.sqlite.SQLiteQueryBuilder
+import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -16,6 +17,8 @@ const val FILENAME_COLUMN = "FILENAME"
 const val DESCRIPTION_COLUMN = "DESCRIPTION"
 const val DATE_COLUMN = "DATE"
 const val TIME_COLUMN = "TIME"
+
+const val COUNT_COLUMN = "count($DATE_COLUMN)"
 
 class PDOpenHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
 
@@ -97,5 +100,28 @@ class PDDB(context: Context) {
         return result
     }
 
+    fun getStatistic(): List<Pair<Date, Int>> {
+
+        val cursor = db.query(TABLE_NAME,
+            arrayOf(DATE_COLUMN, COUNT_COLUMN),
+            null, arrayOf(),
+            DATE_COLUMN,
+            null, null)
+
+        val dateIndex = cursor.getColumnIndex(DATE_COLUMN)
+        val countIndex = cursor.getColumnIndex(COUNT_COLUMN)
+
+        val result: MutableList<Pair<Date, Int>> = mutableListOf()
+
+        while(cursor.moveToNext()) {
+            val date = dateFormat.parse(cursor.getString(dateIndex))
+            val count = cursor.getInt(countIndex)
+
+            if (date != null) result.add(Pair(date, count));
+        }
+
+        cursor.close()
+        return result
+    }
 
 }
