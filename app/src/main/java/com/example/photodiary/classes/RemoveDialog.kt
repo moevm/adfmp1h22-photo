@@ -10,7 +10,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.photodiary.ui.GalleryFragment
 import java.io.File
 
-class RemoveDialog(id: Int?, imageFile: File?, galleryFragment: GalleryFragment) : DialogFragment() {
+class RemoveDialog(id: Int?, imageFile: File?, galleryFragment: GalleryFragment? = null) : DialogFragment() {
 
     private val imageId = id
     private val galleryFragment = galleryFragment
@@ -25,13 +25,15 @@ class RemoveDialog(id: Int?, imageFile: File?, galleryFragment: GalleryFragment)
                 }
                 .setNegativeButton("Да") { dialog, id ->
                     imageId?.let { it1 -> db?.deletePhotoById(it1) }
-                    val detachTransactional = parentFragmentManager.beginTransaction()
-                    val attachTransactional = parentFragmentManager.beginTransaction()
-                    detachTransactional.detach(galleryFragment)
-                    detachTransactional.commit()
-                    attachTransactional.attach(galleryFragment)
-                    attachTransactional.commit()
-                    imageFile?.delete()
+                    if (galleryFragment !== null) {
+                        val detachTransactional = parentFragmentManager.beginTransaction()
+                        val attachTransactional = parentFragmentManager.beginTransaction()
+                        detachTransactional.detach(galleryFragment)
+                        detachTransactional.commit()
+                        attachTransactional.attach(galleryFragment)
+                        attachTransactional.commit()
+                        imageFile?.delete()
+                    }
                     Toast.makeText(activity, "Запись удалена",
                         Toast.LENGTH_LONG).show()
                 }

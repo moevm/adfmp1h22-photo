@@ -91,8 +91,6 @@ class GalleryFragment : Fragment() {
         image.setOnClickListener{
             val intent = Intent(context, Photo::class.java)
             intent.putExtra("imageId", photoInfo.id)
-            intent.putExtra("imageName", photoInfo.fileName)
-            intent.putExtra("imageDescription", photoInfo.description)
             startActivity(intent)
         }
         image.setOnLongClickListener{

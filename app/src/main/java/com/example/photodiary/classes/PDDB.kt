@@ -63,9 +63,45 @@ class PDDB(context: Context) {
 
     }
 
+    fun updatePhotoDescription(id: Int, description: String?){
+        val updateValues = ContentValues()
+        updateValues.put(DESCRIPTION_COLUMN, description)
+        db.update(TABLE_NAME, updateValues, "$ID_COLUMN=$id", null)
+    }
+
     fun deletePhotoById(id: Int){
-        Log.d("TAG", id.toString())
         db.delete(TABLE_NAME, "$ID_COLUMN=$id", null)
+    }
+
+    fun getPhotoInfoById(imageId: Int): PhotoInfo?{
+        val cursor = db.query(TABLE_NAME,
+            arrayOf(ID_COLUMN, FILENAME_COLUMN, DESCRIPTION_COLUMN, DATE_COLUMN, TIME_COLUMN),
+            "$ID_COLUMN=?",
+            arrayOf(imageId.toString()), null, null, null
+        )
+
+        val idIndex = cursor.getColumnIndex(ID_COLUMN)
+        val fileNameIndex = cursor.getColumnIndex(FILENAME_COLUMN)
+        val descriptionIndex = cursor.getColumnIndex(DESCRIPTION_COLUMN)
+        val dateIndex = cursor.getColumnIndex(DATE_COLUMN)
+        val timeIndex = cursor.getColumnIndex(TIME_COLUMN)
+
+        var photoInfo: PhotoInfo? = null
+        while(cursor.moveToNext()) {
+
+            val id = cursor.getInt(idIndex)
+            val fileName = cursor.getString(fileNameIndex)
+            val description = cursor.getString(descriptionIndex)
+            val date = cursor.getString(dateIndex)
+            val time = cursor.getString(timeIndex)
+
+            val dateTime = dateTimeFormat.parse("$date $time")
+
+            photoInfo = PhotoInfo(id, dateTime, fileName, description)
+        }
+
+        cursor.close()
+        return photoInfo
     }
 
     fun getByDate(queryDate: Date): List<PhotoInfo> {
