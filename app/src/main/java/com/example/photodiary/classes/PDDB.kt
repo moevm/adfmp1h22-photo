@@ -63,6 +63,11 @@ class PDDB(context: Context) {
 
     }
 
+    fun deletePhotoById(id: Int){
+        Log.d("TAG", id.toString())
+        db.delete(TABLE_NAME, "$ID_COLUMN=$id", null)
+    }
+
     fun getByDate(queryDate: Date): List<PhotoInfo> {
 
         val cursor = db.query(TABLE_NAME,

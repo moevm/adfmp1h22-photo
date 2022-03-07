@@ -17,10 +17,10 @@ class Photo : AppCompatActivity() {
 
         val deleteButton: ImageButton = findViewById(R.id.delete)
         deleteButton.setOnClickListener{
-            val removeDialog = RemoveDialog()
-            val manager = supportFragmentManager
-            removeDialog.show(manager, "remove")
-            true
+//            val removeDialog = RemoveDialog(1)
+//            val manager = supportFragmentManager
+//            removeDialog.show(manager, "remove")
+//            true
         }
 
         val editButton: ImageButton = findViewById(R.id.edit)

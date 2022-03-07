@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import com.example.photodiary.classes.PDDB
 import com.example.photodiary.classes.PhotoInfo
 import com.example.photodiary.classes.RemoveDialog
 import com.example.photodiary.databinding.GalleryBinding
+import java.io.File
 import java.util.*
 
 
@@ -29,8 +31,6 @@ class GalleryFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
-
-        val photos = PDDB(this.requireContext()).getByDate(Calendar.getInstance().time)
 
         val view: View = inflater.inflate(R.layout.gallery, container,
             false)
@@ -49,27 +49,27 @@ class GalleryFragment : Fragment() {
         if (year != null && day !=null) {
             selectedDay.set(year, month, day)
         }
-        val list:List<PhotoInfo> = db?.getByDate(Date(selectedDay.timeInMillis))!!
+        val photos:List<PhotoInfo> = db?.getByDate(Date(selectedDay.timeInMillis))!!
         val table:TableLayout = view.findViewById(R.id.table)
         var tableRow: TableRow? = null
-        for (i in list.indices) {
+        for (i in photos.indices) {
             if (i%2 == 0) {
                 tableRow = TableRow(context)
                 tableRow.layoutParams = TableRow.LayoutParams(
                     TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT
                 )
-                val image = createImage(list[i])
+                val image = createImage(photos[i])
                 tableRow.addView(image)
             }
 
             else {
-                val image = createImage(list[i])
+                val image = createImage(photos[i])
                 tableRow?.addView(image)
                 table.addView(tableRow)
             }
         }
-        if (list.size % 2 == 1){
+        if (photos.size % 2 == 1){
             table.addView(tableRow)
         }
 
@@ -93,7 +93,10 @@ class GalleryFragment : Fragment() {
             startActivity(intent)
         }
         image.setOnLongClickListener{
-            val removeDialog = RemoveDialog()
+            Log.d("TAG", "Gallery: " + photoInfo.id.toString())
+            val storageDir = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+            val imageFile = File(storageDir, photoInfo.fileName)
+            val removeDialog = RemoveDialog(photoInfo.id, imageFile,this)
             val manager = parentFragmentManager
             removeDialog.show(manager, "remove")
             true
