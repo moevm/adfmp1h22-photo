@@ -90,6 +90,9 @@ class GalleryFragment : Fragment() {
         image.setImageURI(Uri.parse(Environment.getExternalStorageDirectory().path + "/Android/data/com.example.photodiary/files/Pictures/" + photoInfo.fileName))
         image.setOnClickListener{
             val intent = Intent(context, Photo::class.java)
+            intent.putExtra("imageId", photoInfo.id)
+            intent.putExtra("imageName", photoInfo.fileName)
+            intent.putExtra("imageDescription", photoInfo.description)
             startActivity(intent)
         }
         image.setOnLongClickListener{

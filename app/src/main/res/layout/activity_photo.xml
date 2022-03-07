@@ -42,7 +42,7 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/image"
         android:layout_width="421dp"
         android:layout_height="411dp"
         android:layout_marginBottom="1dp"
@@ -53,16 +53,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/description"
         android:layout_width="401dp"
         android:layout_height="35dp"
-        android:text="Текст к фотозаписи"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/image"
         app:layout_constraintVertical_bias="0.858" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
