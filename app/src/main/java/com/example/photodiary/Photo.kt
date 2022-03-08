@@ -9,8 +9,12 @@ import android.util.Log
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.photodiary.classes.Day
 import com.example.photodiary.classes.EditDialog
 import com.example.photodiary.classes.PDDB
+import com.example.photodiary.classes.RemoveDialog
+import java.io.File
+import java.util.*
 
 class Photo : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +36,10 @@ class Photo : AppCompatActivity() {
 
         val deleteButton: ImageButton = findViewById(R.id.delete)
         deleteButton.setOnClickListener{
-            val removeDialog = RemoveDialog(1)
+            val storageDir = this.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+            val imageFile = File(storageDir, photoInfo?.fileName)
+            val day = intent.getSerializableExtra("day") as Day
+            val removeDialog = RemoveDialog(photoInfo?.id, imageFile, day)
             val manager = supportFragmentManager
             removeDialog.show(manager, "remove")
             true

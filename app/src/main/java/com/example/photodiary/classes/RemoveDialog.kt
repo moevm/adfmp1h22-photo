@@ -1,20 +1,27 @@
 package com.example.photodiary.classes
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TableRow
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import com.example.photodiary.MainActivity
 import com.example.photodiary.ui.GalleryFragment
 import java.io.File
 
-class RemoveDialog(id: Int?, imageFile: File?, galleryFragment: GalleryFragment? = null) : DialogFragment() {
+class RemoveDialog(private val imageId: Int?,
+                   private val imageFile: File?,
+                   private val galleryFragment: GalleryFragment?,
+                   private val moveToGallery: Boolean,
+                   private val dayToMove: Day?) : DialogFragment() {
 
-    private val imageId = id
-    private val galleryFragment = galleryFragment
-    private val imageFile = imageFile
+    constructor(imageId: Int?, imageFile: File?, dayToMove: Day): this(imageId, imageFile, null, true, dayToMove)
+
+    constructor(imageId: Int?, imageFile: File?, galleryFragment: GalleryFragment?): this(imageId, imageFile, galleryFragment, false, null)
+
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val db = context?.let { PDDB(it) }
@@ -34,8 +41,17 @@ class RemoveDialog(id: Int?, imageFile: File?, galleryFragment: GalleryFragment?
                         attachTransactional.commit()
                         imageFile?.delete()
                     }
-                    Toast.makeText(activity, "Запись удалена",
-                        Toast.LENGTH_LONG).show()
+                    if (moveToGallery) {
+                        val intent = Intent(context, MainActivity::class.java)
+                        intent.putExtra("day", dayToMove?.dayOfMonth)
+                        intent.putExtra("month", dayToMove?.month)
+                        intent.putExtra("year", dayToMove?.year)
+                        startActivity(intent)
+                        Toast.makeText(
+                            activity, "Запись удалена",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                 }
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")

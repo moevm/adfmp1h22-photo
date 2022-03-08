@@ -12,6 +12,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.photodiary.Photo
 import com.example.photodiary.R
+import com.example.photodiary.classes.Day
 import com.example.photodiary.classes.PDDB
 import com.example.photodiary.classes.PhotoInfo
 import com.example.photodiary.classes.RemoveDialog
@@ -91,6 +92,9 @@ class GalleryFragment : Fragment() {
         image.setOnClickListener{
             val intent = Intent(context, Photo::class.java)
             intent.putExtra("imageId", photoInfo.id)
+            val calendar: Calendar = Calendar.getInstance()
+            calendar.time = photoInfo?.date
+            intent.putExtra("day", Day(calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR)))
             startActivity(intent)
         }
         image.setOnLongClickListener{
