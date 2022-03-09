@@ -37,16 +37,25 @@ class MainActivity : AppCompatActivity() {
             false
         }
 
-        val day = intent.getIntExtra("day", 0)
-        val month = intent.getIntExtra("month", 0)
-        val year = intent.getIntExtra("year", 0)
-        if (checkMoveToGallery(day, month, year)){
-            val bundle = Bundle()
-            bundle.putInt("day", day)
-            bundle.putInt("month", month)
-            bundle.putInt("year", year)
+        val move = intent.getStringExtra("move")
+        if (move != null){
+            if (move == "gallery"){
+                val day = intent.getIntExtra("day", 0)
+                val month = intent.getIntExtra("month", 0)
+                val year = intent.getIntExtra("year", 0)
+                if (checkMoveToGallery(day, month, year)){
+                    val bundle = Bundle()
+                    bundle.putInt("day", day)
+                    bundle.putInt("month", month)
+                    bundle.putInt("year", year)
 
-            navController.navigate(R.id.navigation_gallery, bundle)
+                    navController.navigate(R.id.navigation_gallery, bundle)
+                }
+            }
+
+            else if (move == "search"){
+                navController.navigate(R.id.navigation_search)
+            }
         }
 
 

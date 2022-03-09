@@ -41,11 +41,14 @@ class Photo : AppCompatActivity() {
 
         val deleteButton: ImageButton = findViewById(R.id.delete)
         deleteButton.setOnClickListener{
-            val day = intent.getSerializableExtra("day") as Day
-            val removeDialog = RemoveDialog(photoInfo?.id, imageFile, day)
+            val day = intent.getSerializableExtra("day")
+            val removeDialog: RemoveDialog = if (day == null){
+                RemoveDialog(photoInfo?.id, imageFile)
+            } else {
+                RemoveDialog(photoInfo?.id, imageFile, day as Day)
+            }
             val manager = supportFragmentManager
             removeDialog.show(manager, "remove")
-            true
         }
 
         val editButton: ImageButton = findViewById(R.id.edit)
@@ -57,10 +60,6 @@ class Photo : AppCompatActivity() {
 
         val shareButton: ImageButton = findViewById(R.id.share)
         shareButton.setOnClickListener{
-//            val shareIntent = Intent(Intent.ACTION_SEND)
-//            shareIntent.type = "image/jpg"
-//            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(Environment.getExternalStorageDirectory().path + "/Android/data/com.example.photodiary/files/Pictures/" + photoInfo?.fileName))
-//            startActivity(Intent.createChooser(shareIntent, "Share image using"))
 
             val builder = VmPolicy.Builder()
             StrictMode.setVmPolicy(builder.build())

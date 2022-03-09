@@ -141,6 +141,43 @@ class PDDB(context: Context) {
         return result
     }
 
+    fun getByDescription(query: String): List<PhotoInfo> {
+
+        val cursor = db.query(TABLE_NAME,
+            arrayOf(ID_COLUMN, FILENAME_COLUMN, DESCRIPTION_COLUMN, DATE_COLUMN, TIME_COLUMN),
+            "$DESCRIPTION_COLUMN LIKE ?",
+            arrayOf("%$query%"),
+            null, null, null
+        )
+
+        val idIndex = cursor.getColumnIndex(ID_COLUMN)
+        val fileNameIndex = cursor.getColumnIndex(FILENAME_COLUMN)
+        val descriptionIndex = cursor.getColumnIndex(DESCRIPTION_COLUMN)
+        val dateIndex = cursor.getColumnIndex(DATE_COLUMN)
+        val timeIndex = cursor.getColumnIndex(TIME_COLUMN)
+
+        val result: MutableList<PhotoInfo> = mutableListOf()
+
+        while(cursor.moveToNext()) {
+
+            val id = cursor.getInt(idIndex)
+            val fileName = cursor.getString(fileNameIndex)
+            val description = cursor.getString(descriptionIndex)
+            val date = cursor.getString(dateIndex)
+            val time = cursor.getString(timeIndex)
+
+            val dateTime = dateTimeFormat.parse("$date $time")
+
+            if (dateTime != null) {
+                result.add(PhotoInfo(id, dateTime, fileName, description))
+            }
+
+        }
+
+        cursor.close()
+        return result
+    }
+
     fun getStatistic(): List<Pair<Date, Int>> {
 
         val cursor = db.query(TABLE_NAME,
