@@ -28,8 +28,6 @@ class EditDialog(imageId: Int, description: String?, textView: TextView) : Dialo
                     val db = context?.let { PDDB(it) }
                     db?.updatePhotoDescription(imageId, textField.text.toString())
                     textView.text = textField.text.toString()
-                    Toast.makeText(activity, "Изменено",
-                        Toast.LENGTH_LONG).show()
                 }
                 .setView(view)
             builder.create()

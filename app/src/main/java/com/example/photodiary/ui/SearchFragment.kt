@@ -44,25 +44,10 @@ class SearchFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                val db = context?.let { PDDB(it) }
-                val photoInfos = db?.getByDescription(newText)
-                linearLayout.removeAllViews()
-                photoInfos?.forEach{
-                    val horizontalLinearLayout = createHorizontalLinearLayout(factor, it.id)
-                    val image = createImageView(factor, it.fileName)
-                    val description = createImageDescriptionView(factor, it.description)
-                    horizontalLinearLayout.addView(image)
-                    horizontalLinearLayout.addView(description)
-                    linearLayout.addView(horizontalLinearLayout)
-                }
+                searchByDescription(linearLayout, newText, factor)
                 return true
             }
         })
-
-        val listener = View.OnClickListener{
-            val intent = Intent(context, Photo::class.java)
-            startActivity(intent)
-        }
 
         return view
     }
@@ -103,6 +88,20 @@ class SearchFragment : Fragment() {
         description.gravity = Gravity.CENTER_VERTICAL
         description.text = descriptionText
         return description
+    }
+
+    fun searchByDescription(linearLayout: LinearLayout, text: String, factor: Float){
+        val db = context?.let { PDDB(it) }
+        val photoInfos = db?.getByDescription(text)
+        linearLayout.removeAllViews()
+        photoInfos?.forEach{
+            val horizontalLinearLayout = createHorizontalLinearLayout(factor, it.id)
+            val image = createImageView(factor, it.fileName)
+            val description = createImageDescriptionView(factor, it.description)
+            horizontalLinearLayout.addView(image)
+            horizontalLinearLayout.addView(description)
+            linearLayout.addView(horizontalLinearLayout)
+        }
     }
 
     override fun onDestroyView() {
