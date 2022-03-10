@@ -178,6 +178,37 @@ class PDDB(context: Context) {
         return result
     }
 
+    fun getAllDates(): List<Date> {
+
+        val cursor = db.query(TABLE_NAME,
+            arrayOf(ID_COLUMN, FILENAME_COLUMN, DESCRIPTION_COLUMN, DATE_COLUMN, TIME_COLUMN),
+            null,
+            null,
+            null, null, null
+        )
+
+        val dateIndex = cursor.getColumnIndex(DATE_COLUMN)
+        val timeIndex = cursor.getColumnIndex(TIME_COLUMN)
+
+        val result: MutableList<Date> = mutableListOf()
+
+        while(cursor.moveToNext()) {
+
+            val date = cursor.getString(dateIndex)
+            val time = cursor.getString(timeIndex)
+
+            val dateTime = dateTimeFormat.parse("$date $time")
+
+            if (dateTime != null) {
+                result.add(dateTime)
+            }
+
+        }
+
+        cursor.close()
+        return result
+    }
+
     fun getStatistic(): List<Pair<Date, Int>> {
 
         val cursor = db.query(TABLE_NAME,

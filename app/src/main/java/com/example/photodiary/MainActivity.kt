@@ -9,8 +9,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.photodiary.classes.PDCamera
+import com.example.photodiary.classes.PDDB
 import com.example.photodiary.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +28,7 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
+
 
         navView.setOnItemReselectedListener {
             navController.navigateUp()
@@ -68,4 +71,5 @@ class MainActivity : AppCompatActivity() {
     fun checkMoveToGallery(day:Int, month:Int, year:Int): Boolean{
        return day in 1..31 && month in 0..11 && year > 0
     }
+
 }
