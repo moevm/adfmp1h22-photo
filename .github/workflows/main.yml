@@ -35,4 +35,4 @@ jobs:
           api-level: 26
           arch: x86_64
           target: default
-          script: ./gradlew connectedCheck
+          script: ./gradlew check && ./gradlew connectedCheck

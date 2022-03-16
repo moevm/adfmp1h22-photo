@@ -71,14 +71,14 @@ class CalendarFragment : Fragment() {
     }
 
 
-    fun getCountDays(dates: List<Date>): Int{
+    fun getCountDays(dates: List<Date>): Int {
         var count = 0
-        var day = Instant.now()
-        Log.d("TAG", Date.from(day).toString())
-        while (isDateInList(dates, Date.from(day))){
-            Log.d("TAG", Date.from(day).toString())
+        var day = Date()
+        Log.d("TAG", day.toString())
+        while (isDateInList(dates, day)){
+            Log.d("TAG", day.toString())
             count++
-            day = day.minus(1, ChronoUnit.DAYS)
+            day = Date(day.time - 604800000L) // 7 * 24 * 60 * 60 * 1000
         }
         return count
     }
