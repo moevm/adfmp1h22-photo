@@ -19,6 +19,7 @@ const val DATE_COLUMN = "DATE"
 const val TIME_COLUMN = "TIME"
 
 const val COUNT_COLUMN = "count($DATE_COLUMN)"
+const val TOTAL_COUNT = "count(*)"
 
 class PDOpenHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
 
@@ -51,7 +52,7 @@ class PDDB(context: Context) {
         db = dbOpenHelper.writableDatabase
     }
 
-    fun addPhoto(photoInfo: PhotoInfo) {
+    fun addPhoto(photoInfo: PhotoInfo): Long {
 
         val newValues = ContentValues()
         newValues.put(FILENAME_COLUMN, photoInfo.fileName)
@@ -59,7 +60,7 @@ class PDDB(context: Context) {
         newValues.put(DATE_COLUMN, dateFormat.format(photoInfo.date))
         newValues.put(TIME_COLUMN, timeFormat.format(photoInfo.date))
 
-        db.insert(TABLE_NAME, null, newValues)
+        return db.insert(TABLE_NAME, null, newValues)
 
     }
 
@@ -230,6 +231,19 @@ class PDDB(context: Context) {
         }
 
         cursor.close()
+        return result
+    }
+
+    fun totalCount(): Int {
+        val cursor = db.query(TABLE_NAME, arrayOf(TOTAL_COUNT),
+            null, null, null, null, null)
+
+        val totalCountIndex = cursor.getColumnIndex(TOTAL_COUNT)
+        cursor.moveToNext()
+        val result = cursor.getInt(totalCountIndex)
+
+        cursor.close()
+
         return result
     }
 
