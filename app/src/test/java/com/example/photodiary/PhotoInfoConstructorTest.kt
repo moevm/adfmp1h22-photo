@@ -6,10 +6,10 @@ import org.junit.Test
 import java.text.SimpleDateFormat
 import java.util.*
 
-class PhotoInfoTest {
+class PhotoInfoConstructorTest {
 
     @Test
-    fun fileName() {
+    fun constructorTest() {
         val photoInfo = PhotoInfo()
         val filename = "${SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(Date())}.jpg"
         Assert.assertEquals(filename, photoInfo.fileName)
