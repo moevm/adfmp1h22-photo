@@ -62,6 +62,9 @@ class GalleryFragment : Fragment() {
                 )
                 val image = createImage(photos[i])
                 tableRow.addView(image)
+//                if (i == photos.size-1){
+//                    table.addView(tableRow)
+//                }
             }
 
             else {
