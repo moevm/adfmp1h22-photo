@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +36,7 @@ class GalleryFragment : Fragment() {
 
         val view: View = inflater.inflate(R.layout.gallery, container,
             false)
-
+        val factor = context?.resources?.displayMetrics?.density!!
         val dateText: TextView = view.findViewById(R.id.date)
         val day = arguments?.getInt("day")
         val month = arguments?.getInt("month")
@@ -60,16 +61,19 @@ class GalleryFragment : Fragment() {
                     TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT
                 )
-                val image = createImage(photos[i])
-                tableRow.addView(image)
-//                if (i == photos.size-1){
-//                    table.addView(tableRow)
-//                }
+                val image = createImage(photos[i], factor)
+                val description = createDescription(photos[i], factor)
+                val linearLayout = createLinearLayout(photos[i], image, description)
+
+                tableRow.addView(linearLayout)
             }
 
             else {
-                val image = createImage(photos[i])
-                tableRow?.addView(image)
+                val image = createImage(photos[i], factor)
+                val description = createDescription(photos[i], factor)
+                val linearLayout = createLinearLayout(photos[i], image, description)
+
+                tableRow?.addView(linearLayout)
                 table.addView(tableRow)
             }
         }
@@ -81,18 +85,37 @@ class GalleryFragment : Fragment() {
 
     }
 
-    fun createImage(photoInfo: PhotoInfo): ImageView {
+    fun createImage(photoInfo: PhotoInfo, factor: Float): ImageView {
         val image = ImageView(context);
         image.layoutParams = TableRow.LayoutParams(
             TableRow.LayoutParams.WRAP_CONTENT,
             TableRow.LayoutParams.WRAP_CONTENT
         )
-        val factor = context?.resources?.displayMetrics?.density!!
+
         val layoutParams = TableRow.LayoutParams((125*factor).toInt(), (125*factor).toInt())
         layoutParams.setMargins((25*factor).toInt(), (20*factor).toInt(), 0, 0)
         image.layoutParams = layoutParams
         image.setImageURI(Uri.parse(Environment.getExternalStorageDirectory().path + "/Android/data/com.example.photodiary/files/Pictures/" + photoInfo.fileName))
-        image.setOnClickListener{
+
+        return image
+    }
+
+    fun createDescription(photoInfo: PhotoInfo, factor: Float): TextView {
+        val description = TextView(context);
+        description.gravity = Gravity.CENTER_VERTICAL
+        description.text = photoInfo.description
+        description.gravity = Gravity.CENTER_HORIZONTAL
+        val layoutParams = TableRow.LayoutParams()
+        layoutParams.setMargins((25*factor).toInt(), (7*factor).toInt(), 0, 0)
+        description.layoutParams = layoutParams
+
+        return description
+    }
+
+    fun createLinearLayout(photoInfo: PhotoInfo, image: ImageView, description: TextView): LinearLayout{
+        val linearLayout = LinearLayout(context)
+        linearLayout.orientation = LinearLayout.VERTICAL
+        linearLayout.setOnClickListener{
             val intent = Intent(context, Photo::class.java)
             intent.putExtra("imageId", photoInfo.id)
             val calendar: Calendar = Calendar.getInstance()
@@ -100,7 +123,7 @@ class GalleryFragment : Fragment() {
             intent.putExtra("day", Day(calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR)))
             startActivity(intent)
         }
-        image.setOnLongClickListener{
+        linearLayout.setOnLongClickListener{
             Log.d("TAG", "Gallery: " + photoInfo.id.toString())
             val storageDir = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
             val imageFile = File(storageDir, photoInfo.fileName)
@@ -109,7 +132,11 @@ class GalleryFragment : Fragment() {
             removeDialog.show(manager, "remove")
             true
         }
-        return image
+
+        linearLayout.addView(image)
+        linearLayout.addView(description)
+
+        return linearLayout
     }
 
     override fun onDestroyView() {
