@@ -36,6 +36,7 @@ class SearchFragment : Fragment() {
         val factor = context?.resources?.displayMetrics?.density!!
 
         val linearLayout: LinearLayout = view.findViewById(R.id.linearLayout)
+        searchByDescription(linearLayout, "", factor)
 
         val searchView: SearchView = view.findViewById(R.id.searchView)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
