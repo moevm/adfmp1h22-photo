@@ -1,10 +1,10 @@
 package com.example.photodiary.ui
 
-import android.content.ClipDescription
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +15,8 @@ import com.example.photodiary.Photo
 import com.example.photodiary.R
 import com.example.photodiary.classes.PDDB
 import com.example.photodiary.databinding.SearchBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
 class SearchFragment : Fragment() {
 
@@ -83,12 +85,24 @@ class SearchFragment : Fragment() {
     fun createImageDescriptionView(factor: Float, descriptionText: String): TextView{
         val description = TextView(context);
         description.layoutParams = LinearLayout.LayoutParams(
-            (104*factor).toInt(),
-            LinearLayout.LayoutParams.MATCH_PARENT
+            (175*factor).toInt(),
+            100*factor.toInt()
         )
         description.gravity = Gravity.CENTER_VERTICAL
         description.text = descriptionText
         return description
+    }
+
+    fun createImageDateView(factor: Float, dateStr: String): TextView{
+        val date = TextView(context);
+        date.layoutParams = LinearLayout.LayoutParams(
+            (175*factor).toInt(),
+            30*factor.toInt()
+        )
+        date.gravity = Gravity.RIGHT
+        date.text = dateStr
+        date.textSize = 12f
+        return date
     }
 
     fun searchByDescription(linearLayout: LinearLayout, text: String, factor: Float){
@@ -98,9 +112,18 @@ class SearchFragment : Fragment() {
         photoInfos?.forEach{
             val horizontalLinearLayout = createHorizontalLinearLayout(factor, it.id)
             val image = createImageView(factor, it.fileName)
+
+
             val description = createImageDescriptionView(factor, it.description)
+            val simpleDateFormat = SimpleDateFormat("dd.MM.yyyy")
+            val date = createImageDateView(factor, simpleDateFormat.format(it.date))
+            val textLayout = LinearLayout(context)
+            textLayout.orientation = LinearLayout.VERTICAL
+            textLayout.addView(description)
+            textLayout.addView(date)
+
             horizontalLinearLayout.addView(image)
-            horizontalLinearLayout.addView(description)
+            horizontalLinearLayout.addView(textLayout)
             linearLayout.addView(horizontalLinearLayout)
         }
     }

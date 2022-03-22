@@ -19,6 +19,7 @@ import com.example.photodiary.classes.PhotoInfo
 import com.example.photodiary.classes.RemoveDialog
 import com.example.photodiary.databinding.GalleryBinding
 import java.io.File
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -102,8 +103,10 @@ class GalleryFragment : Fragment() {
 
     fun createDescription(photoInfo: PhotoInfo, factor: Float): TextView {
         val description = TextView(context);
+        val simpleDateFormat = SimpleDateFormat("HH:mm")
         description.gravity = Gravity.CENTER_VERTICAL
-        description.text = photoInfo.description
+        description.text = if (photoInfo.description != "") photoInfo.description else simpleDateFormat.format(photoInfo.date)
+
         description.gravity = Gravity.CENTER_HORIZONTAL
         val layoutParams = TableRow.LayoutParams()
         layoutParams.setMargins((25*factor).toInt(), (7*factor).toInt(), 0, 0)
